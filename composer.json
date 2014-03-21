@@ -1,0 +1,14 @@
+{
+    "require": {
+        "infomaniac-amf/php": "0.6.0",
+        "laravel/framework": "4.1.*",
+        "mysql-workbench-schema-exporter/mysql-workbench-schema-exporter": "dev-master",
+        "atrauzzi/laravel-doctrine": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Conpherence\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}

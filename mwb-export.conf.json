@@ -1,0 +1,22 @@
+{
+    "export": "doctrine2-annotation",
+    "zip": false,
+    "dir": "src/Conpherence/Entities",
+    "params": {
+        "indentation": 4,
+        "useTabs": false,
+        "filename": "%entity%.%extension%",
+        "skipPluralNameChecking": false,
+        "backupExistingFile": false,
+        "useLoggedStorage": false,
+        "enhanceManyToManyDetection": true,
+        "logToConsole": true,
+        "useAnnotationPrefix": "",
+        "bundleNamespace": "",
+        "entityNamespace": "Conpherence\\Entities",
+        "useAutomaticRepository": false,
+        "skipGetterAndSetter": false,
+        "generateEntitySerialization": true,
+        "quoteIdentifier": false
+    }
+}

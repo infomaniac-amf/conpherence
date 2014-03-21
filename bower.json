@@ -1,0 +1,26 @@
+{
+  "name": "eventr",
+  "version": "1.0.0",
+  "authors": [
+    "Danny Kopping <dannykopping@gmail.com>"
+  ],
+  "description": "Because Lanyrd is too cool.",
+  "main": "index.html",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "homepage": "http://infomaniac.co.za",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "js": "infomaniac-amf/js#~0.5.0",
+    "bootflatv2": "*"
+  }
+}
