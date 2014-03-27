@@ -10,4 +10,19 @@ use Conpherence\Entities\Base\BaseSession;
  */
 class Session extends BaseSession
 {
+    /**
+     * Return an associative array of class properties
+     *
+     * @return array
+     */
+    public function export()
+    {
+        return array(
+            'id' => $this->getId(),
+            'date' => $this->getDate()->format('Y-m-d H:i:s'),
+            'title' => $this->getTitle(),
+            'description' => $this->getDescription(),
+            'event' => $this->getEvents()->toArray()
+        );
+    }
 }

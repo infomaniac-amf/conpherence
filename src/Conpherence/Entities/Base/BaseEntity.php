@@ -2,13 +2,34 @@
 namespace Conpherence\Entities\Base;
 
 use Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine;
+use Doctrine\Common\Util\Debug;
+use Doctrine\ORM\EntityManager;
 use Illuminate\Support\Facades\App;
+use Infomaniac\AMF\ISerializable;
 
-class BaseEntity
+abstract class BaseEntity implements ISerializable
 {
-    public function getEntityManager()
+    /**
+     * @return EntityManager
+     */
+    public static function getEntityManager()
     {
-        $em = App::make('Doctrine\ORM\EntityManager');
-        return $em;
+        $entityManager = App::make('Doctrine\ORM\EntityManager');
+        return $entityManager;
+    }
+
+    public static function getRepository()
+    {
+        return static::getEntityManager()->getRepository(get_called_class());
+    }
+
+    /**
+     * Import data from an external source into this class
+     *
+     * @param $data mixed
+     */
+    public function import($data)
+    {
+        // TODO: Implement import() method.
     }
 }

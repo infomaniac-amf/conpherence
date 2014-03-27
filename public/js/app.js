@@ -1,5 +1,7 @@
 (function() {
-    sendPacket(AMF.stringify({greeting: 'hello!'}), '/greeting', function(e) {
-       console.log(AMF.parse(e.currentTarget.responseText));
+    get('/amf/speakers', function() {
+        var s = Date.now();
+        console.log(AMF.parse(this.responseText));
+        console.log((Date.now() - s) + 'ms');
     });
 })();

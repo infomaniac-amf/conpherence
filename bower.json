@@ -20,7 +20,7 @@
     "tests"
   ],
   "dependencies": {
-    "js": "infomaniac-amf/js#~0.5.0",
+    "infomaniac-amf.js": "*",
     "bootflatv2": "*"
   }
 }

@@ -46,8 +46,7 @@ abstract class BaseSpeaker extends BaseEntity
     protected $twitterHandle;
 
     /**
-     * @OneToOne(targetEntity="Conpherence\Entities\Bio", mappedBy="speaker", cascade={"persist"})
-     * @JoinColumn(name="id", nullable=false)
+     * @Column(name="`bio`", type="text")
      */
     protected $bio;
 
@@ -155,12 +154,12 @@ abstract class BaseSpeaker extends BaseEntity
     }
 
     /**
-     * Set Bio entity (one to one).
+     * Set the value of bio.
      *
-     * @param \Conpherence\Entities\Bio $bio
+     * @param string $bio
      * @return \Conpherence\Entities\Speaker
      */
-    public function setBio(Entities\Bio $bio = null)
+    public function setBio($bio = null)
     {
         $this->bio = $bio;
 
@@ -168,9 +167,9 @@ abstract class BaseSpeaker extends BaseEntity
     }
 
     /**
-     * Get Bio entity (one to one).
+     * Get the value of bio.
      *
-     * @return \Conpherence\Entities\Bio
+     * @return string
      */
     public function getBio()
     {
@@ -225,6 +224,6 @@ abstract class BaseSpeaker extends BaseEntity
 
     public function __sleep()
     {
-        return array('id', 'name', 'country', 'twitterHandle');
+        return array('id', 'name', 'country', 'twitterHandle', 'bio');
     }
 }
