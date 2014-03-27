@@ -21,6 +21,7 @@
   ],
   "dependencies": {
     "infomaniac-amf.js": "*",
-    "bootflatv2": "*"
+    "bootflatv2": "*",
+    "angular": "1.2.15"
   }
 }

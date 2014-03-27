@@ -20,26 +20,28 @@ class Speaker extends BaseSpeaker
     public function export()
     {
         return array(
-            'id' => $this->getId(),
-            'name' => $this->getName(),
-            'country' => $this->getCountry(),
-            'bio' => $this->getBio(),
+            'id'       => $this->getId(),
+            'name'     => $this->getName(),
+            'country'  => $this->getCountry(),
+            'twitter'  => $this->getTwitterHandle(),
+            'bio'      => $this->getBio(),
             'sessions' => $this->getSessions()->toArray(),
-            'flagIcon' => $this->getFlag()
+            'flag'     => $this->getFlag()
         );
     }
 
     private function getFlag()
     {
-        $basePath = realpath(__DIR__.'/../../../assets/flags');
-        $country = str_replace(' ', '-', $this->getCountry());
+        $basePath = realpath(__DIR__ . '/../../../assets/flags');
+        $country  = str_replace(' ', '-', $this->getCountry());
 
-        if(!file_exists("$basePath/$country-icon.png")) {
+         if(!file_exists("$basePath/$country-icon.png")) {
             throw new Exception('Could not find country flag');
         }
 
         $flagData = file_get_contents("$basePath/$country-icon.png");
         $flagData = base64_encode($flagData);
+
         return new ByteArray($flagData);
     }
 }

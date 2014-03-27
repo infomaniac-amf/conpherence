@@ -1,0 +1,39 @@
+body {
+    font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    font-size: 20px;
+    line-height: 20px;
+    text-align: justify;
+}
+
+.speaker-box {
+    padding: 20px;
+    border: 1px dashed #222;
+    margin: 10px;
+}
+
+.bio {
+    font-style: italic;
+    color: #AAA;
+    font-family: Georgia, Palatino, "Times New Roman", Times, serif;
+}
+
+.twitter {
+    background-color: #3882ff;
+    border-radius: 10px;
+    padding: 5px;
+    color: #FFFFFF;
+    font-size: 13px;
+}
+
+.twitter:before {
+    content: '@';
+}
+
+img.country-flag {
+    float: right;
+    width: 24px;
+    height: 24px;
+}
