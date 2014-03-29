@@ -23,10 +23,21 @@
                 <img class="country-flag" src="data:image/png;base64,{{ speaker.flag.getData() }}">
             </h1>
 
+            <img class="country-flag" src="data:image/jpeg;base64,{{ speaker.image.getData() }}">
+
             <p class="bio">{{ speaker.bio }}</p>
 
             <p>{{ speaker.name }} has {{ speaker.sessions.length }} sessions to present</p>
         </div>
     </div>
+
+    <form action="/speaker" id="createSpeaker">
+        <input type="text" name="name">
+        <input type="text" name="twitter">
+        <input type="text" name="country">
+        <textarea rows="3" name="bio"></textarea>
+
+        <button type="submit">Submit</button>
+    </form>
 </body>
 </html>

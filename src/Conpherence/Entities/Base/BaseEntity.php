@@ -30,6 +30,16 @@ abstract class BaseEntity implements ISerializable
      */
     public function import($data)
     {
-        // TODO: Implement import() method.
+        if(empty($data)) {
+            return;
+        }
+
+        foreach($data as $key => $value) {
+            if(!property_exists($this, $key)) {
+                continue;
+            }
+
+            $this->$key = $value;
+        }
     }
 }

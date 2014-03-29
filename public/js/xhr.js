@@ -22,7 +22,7 @@ function get(uri, callback) {
     xhr.send();
 }
 
-function sendPacket(packet, uri, callback) {
+function sendPacket(uri, packet, callback) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', uri, true);
     xhr.setRequestHeader('Content-Type', 'application/x-amf');

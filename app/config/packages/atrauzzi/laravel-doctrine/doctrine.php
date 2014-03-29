@@ -35,7 +35,7 @@ return array(
 	|
 	*/
 	'metadata' => array(
-		__DIR__.'/../../../../../app/models'
+		__DIR__.'/../../../../../src/Conpherence/Entities'
 	),
 
 	/*
@@ -48,8 +48,8 @@ return array(
 	|
 	*/
 	'proxy_classes' => array(
-		'auto_generate' => false,
-		'directory' => null,
+		'auto_generate' => true,
+		'directory' => '/tmp',
 		'namespace' => null,
 	),
  

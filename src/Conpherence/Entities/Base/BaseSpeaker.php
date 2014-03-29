@@ -56,6 +56,12 @@ abstract class BaseSpeaker extends BaseEntity
      */
     protected $sessions;
 
+    /**
+     * @ManyToOne(targetEntity="Conpherence\Entities\Image", inversedBy="speakers", cascade={"persist"})
+     * @JoinColumn(name="imageId", referencedColumnName="id")
+     */
+    protected $image;
+
     public function __construct()
     {
         $this->sessions = new ArrayCollection();
@@ -222,8 +228,31 @@ abstract class BaseSpeaker extends BaseEntity
         return $this;
     }
 
+    /**
+     * Set Image entity (many to one).
+     *
+     * @param \Conpherence\Entities\Image $image
+     * @return \Conpherence\Entities\Speaker
+     */
+    public function setImage(Entities\Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get Image entity (many to one).
+     *
+     * @return \Conpherence\Entities\Image
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
     public function __sleep()
     {
-        return array('id', 'name', 'country', 'twitterHandle', 'bio');
+        return array('id', 'name', 'country', 'twitterHandle', 'bio', 'imageId');
     }
 }

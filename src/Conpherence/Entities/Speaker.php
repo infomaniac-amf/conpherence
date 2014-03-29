@@ -21,6 +21,7 @@ class Speaker extends BaseSpeaker
     {
         return array(
             'id'       => $this->getId(),
+            'image'    => $this->getImage(),
             'name'     => $this->getName(),
             'country'  => $this->getCountry(),
             'twitter'  => $this->getTwitterHandle(),
@@ -30,12 +31,27 @@ class Speaker extends BaseSpeaker
         );
     }
 
+    public function getImage()
+    {
+        $image = parent::getImage();
+        if (empty($image)) {
+            return null;
+        }
+
+        $data = stream_get_contents($image->getData());
+        if(empty($data)) {
+            return null;
+        }
+
+        return new ByteArray(base64_encode($data));
+    }
+
     private function getFlag()
     {
         $basePath = realpath(__DIR__ . '/../../../assets/flags');
         $country  = str_replace(' ', '-', $this->getCountry());
 
-         if(!file_exists("$basePath/$country-icon.png")) {
+        if (!file_exists("$basePath/$country-icon.png")) {
             throw new Exception('Could not find country flag');
         }
 

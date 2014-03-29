@@ -2,11 +2,13 @@
 
 App::fatal(function(Exception $exception)
 {
+    Log::error($exception);
     print_r($exception);
 });
 
 App::error(function(Exception $exception)
 {
+    Log::error($exception);
     print_r($exception->getTraceAsString());
 });
 
