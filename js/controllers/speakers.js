@@ -12,4 +12,8 @@ module.exports = function ($scope, $rootScope, $state) {
     $scope.viewSessions = function(speaker) {
         speaker.sessionsVisible = !speaker.sessionsVisible;
     };
+
+    $scope.getDate = function(date) {
+        return moment(date).format("ddd, hA");
+    };
 };

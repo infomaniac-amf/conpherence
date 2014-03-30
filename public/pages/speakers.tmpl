@@ -2,7 +2,7 @@
     <h2>Speakers at {{event.name}}</h2>
 
     <div class="row">
-        <div class="col-lg-4" ng-repeat="speaker in event.speakers">
+        <div class="col-lg-6" ng-repeat="speaker in event.speakers">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">
@@ -10,6 +10,10 @@
                              src="data:image/jpeg;base64,{{ speaker.image.getData() }}">
 
                         {{ speaker.name }}
+
+
+                        <img class="country-flag" title="{{ speaker.country }}"
+                             src="data:image/jpeg;base64,{{ speaker.flag.getData() }}">
                     </h3>
                 </div>
                 <div class="panel-body">
@@ -18,11 +22,15 @@
 
                 <div class="panel-footer">
                     <button type="button" class="btn btn-success" ng-click="viewSessions(speaker)">
-                        View {{ speaker.sessions.length }} sessions
+                        {{ speaker.sessions.length }} session{{ speaker.sessions.length == 1 ? '' : 's' }}
                     </button>
 
-                    <div class="speaker-sessions row" ng-repeat="session in speaker.sessions" ng-show="speaker.sessionsVisible">
-                        <h4>{{ session.title }}</h4>
+                    <div class="list-groupclass speaker-sessions" ng-repeat="session in speaker.sessions"
+                         ng-show="speaker.sessionsVisible">
+                        <a class="list-group-item">
+                            <h4 class="list-group-item-heading">{{ session.title }} - {{ getDate(session.date) }}</h4>
+                            <p class="list-group-item-text">{{ session.description }}</p>
+                        </a>
                     </div>
                 </div>
             </div>

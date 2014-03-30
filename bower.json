@@ -23,6 +23,7 @@
     "infomaniac-amf.js": "*",
     "angular-ui-router": "0.2.10",
     "angular": "1.2.15",
-    "jquery": "1.11.0"
+    "jquery": "1.11.0",
+    "moment": "2.5.1"
   }
 }

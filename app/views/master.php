@@ -7,6 +7,7 @@
     <script src="/bower_components/angular/angular.min.js" type="text/javascript"></script>
     <script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js" type="text/javascript"></script>
     <script src="/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="/bower_components/moment/min/moment.min.js" type="text/javascript"></script>
 
     <script src="/js/app.js" type="text/javascript"></script>
 
