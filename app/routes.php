@@ -23,4 +23,5 @@ Route::filter('amf-response', function($route, $request, $response) {
 
 Route::group(array('prefix' => 'amf', 'after' => 'amf-response'), function() {
     Route::controller('speakers', 'Conpherence\Controllers\SpeakerController');
+    Route::controller('events', 'Conpherence\Controllers\EventController');
 });

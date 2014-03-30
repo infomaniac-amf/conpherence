@@ -15,7 +15,8 @@ function get(uri, callback) {
     xhr.overrideMimeType('application/x-amf; charset=x-user-defined');
     xhr.onreadystatechange = function (event) {
         if (event.currentTarget.readyState == XMLHttpRequest.DONE) {
-            callback.apply(this, [event, xhr]);
+            var data = AMF.parse(this.responseText);
+            callback.apply(this, [data]);
         }
     };
 

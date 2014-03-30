@@ -1,12 +1,27 @@
 var Event = require('./models/Event');
+var Session = require('./models/Session');
+var Speaker = require('./models/Speaker');
 var XHR = require('./xhr');
 
-var app = angular.module('conpherence', []);
-app.controller('AppCtrl', function ($scope, $element) {
-//    get('/amf/speakers', function () {
-//        $scope.speakers = AMF.parse(this.responseText);
-//        $scope.$apply();
-//    });
+var HomeCtrl = require('./controllers/home');
+var SessionCtrl = require('./controllers/session');
 
-    console.log(XHR.getAMF('/amf/speakers'));
-});
+var app = angular.module('conpherence', ['ui.router'])
+    .config(function ($stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.otherwise("/home");
+
+        $stateProvider
+            .state('home', {
+                url: "/home",
+                templateUrl: "pages/home.tmpl",
+                controller: HomeCtrl
+            })
+            .state('sessions', {
+                url: "/sessions/:event",
+                templateUrl: "pages/sessions.tmpl",
+                controller: SessionCtrl
+            })
+    })
+    .controller('AppCtrl', function ($scope, $element) {
+
+    });

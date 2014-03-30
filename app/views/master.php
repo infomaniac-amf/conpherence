@@ -5,6 +5,7 @@
 
     <script src="/bower_components/infomaniac-amf.js/dist/amf.js" type="text/javascript"></script>
     <script src="/bower_components/angular/angular.min.js" type="text/javascript"></script>
+    <script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js" type="text/javascript"></script>
 
     <script src="/js/app.js" type="text/javascript"></script>
 
@@ -22,17 +23,13 @@
             <div class="navbar-collapse collapse navbar-responsive-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="https://github.com/infomaniac-amf">Infomaniac-AMF</a></li>
+                    <li><a ui-sref="state1">State 1</a></li>
+                    <li><a ui-sref="state2">State 2</a></li>
                 </ul>
             </div>
         </div>
 
-        <div class="jumbotron">
-            <h1></h1>
-
-            <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured
-                content or information.</p>
-
-            <p><a class="btn btn-primary btn-lg">Learn more</a></p>
+        <div ui-view>
         </div>
     </div>
 

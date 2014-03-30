@@ -1,0 +1,11 @@
+<div>
+    <div class="jumbotron" ng-repeat="event in events">
+        <h2>{{ event.name }}</h2>
+
+        <p>{{ event.description }}</p>
+
+        <p>
+            <a class="btn btn-primary btn-lg" ng-click="showSessions(event)">Browse the sessions</a>
+        </p>
+    </div>
+</div>
