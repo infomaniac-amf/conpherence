@@ -22,7 +22,7 @@ function get(uri, callback) {
     xhr.send();
 }
 
-function sendPacket(uri, packet, callback) {
+function post(uri, packet, callback) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', uri, true);
     xhr.setRequestHeader('Content-Type', 'application/x-amf');
@@ -35,3 +35,8 @@ function sendPacket(uri, packet, callback) {
 
     xhr.sendAsBinary(packet);
 }
+
+module.exports = {
+    getAMF: get,
+    postAMF: post
+};

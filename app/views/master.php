@@ -6,38 +6,47 @@
     <script src="/bower_components/infomaniac-amf.js/dist/amf.js" type="text/javascript"></script>
     <script src="/bower_components/angular/angular.min.js" type="text/javascript"></script>
 
-    <script src="/js/xhr.js" type="text/javascript"></script>
-    <script src="/js/models/Base.js" type="text/javascript"></script>
-    <script src="/js/models/Speaker.js" type="text/javascript"></script>
-    <script src="/js/models/Session.js" type="text/javascript"></script>
-    <script src="/js/models/Event.js" type="text/javascript"></script>
     <script src="/js/app.js" type="text/javascript"></script>
 
-    <link href="/css/style.css" type="text/css" rel="stylesheet">
-    <title></title>
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <title>Conpherence</title>
 </head>
 <body>
-    <div ng-controller="AppCtrl">
-        <div class="speaker-box" ng-repeat="speaker in speakers">
-            <h1>{{ speaker.name }} <span class="twitter">{{ speaker.twitter }}</span>
-                <img class="country-flag" src="data:image/png;base64,{{ speaker.flag.getData() }}">
-            </h1>
+<div ng-controller="AppCtrl">
 
-            <img class="country-flag" src="data:image/jpeg;base64,{{ speaker.image.getData() }}">
+    <div class="container">
+        <div class="navbar navbar-default">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Conpherence</a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="https://github.com/infomaniac-amf">Infomaniac-AMF</a></li>
+                </ul>
+            </div>
+        </div>
 
-            <p class="bio">{{ speaker.bio }}</p>
+        <div class="jumbotron">
+            <h1></h1>
 
-            <p>{{ speaker.name }} has {{ speaker.sessions.length }} sessions to present</p>
+            <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured
+                content or information.</p>
+
+            <p><a class="btn btn-primary btn-lg">Learn more</a></p>
         </div>
     </div>
 
-    <form action="/speaker" id="createSpeaker">
-        <input type="text" name="name">
-        <input type="text" name="twitter">
-        <input type="text" name="country">
-        <textarea rows="3" name="bio"></textarea>
+    <!--<div class="speaker-box" ng-repeat="speaker in speakers">
+        <h1>{{ speaker.name }} <span class="twitter">{{ speaker.twitter }}</span>
+            <img class="country-flag" src="data:image/png;base64,{{ speaker.flag.getData() }}">
+        </h1>
 
-        <button type="submit">Submit</button>
-    </form>
+        <img class="country-flag" src="data:image/jpeg;base64,{{ speaker.image.getData() }}">
+
+        <p class="bio">{{ speaker.bio }}</p>
+
+        <p>{{ speaker.name }} has {{ speaker.sessions.length }} sessions to present</p>
+    </div>-->
+</div>
 </body>
 </html>

@@ -21,7 +21,7 @@
   ],
   "dependencies": {
     "infomaniac-amf.js": "*",
-    "bootflatv2": "*",
+    "angular-ui-router": "0.2.10",
     "angular": "1.2.15"
   }
 }

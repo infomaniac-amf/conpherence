@@ -31,3 +31,5 @@ BaseModel.prototype = {
         }
     }
 };
+
+module.exports = BaseModel;

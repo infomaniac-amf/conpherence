@@ -1,5 +1,6 @@
 /public/bower_components
 /bootstrap/compiled.php
+/node_modules
 /vendor
 composer.phar
 composer.lock
