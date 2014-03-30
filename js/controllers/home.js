@@ -6,7 +6,6 @@ module.exports = function ($scope, $rootScope, $state) {
     XHR.getAMF('/amf/events', function (data) {
         $scope.events = data;
 
-        $scope.showSessions(data[0]);
         $scope.$apply();
     });
 

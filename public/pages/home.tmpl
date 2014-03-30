@@ -1,6 +1,6 @@
 <div>
     <div class="jumbotron" ng-repeat="event in events">
-        <h2>{{ event.name }}</h2>
+        <h2><a href="{{ event.url }}">{{ event.name }}</a> ({{ event.hashtag }})</h2>
 
         <p>{{ event.description }}</p>
 
@@ -8,4 +8,9 @@
             <a class="btn btn-primary btn-lg" ng-click="showSessions(event)">Browse the sessions</a>
         </p>
     </div>
+
+    <a class="twitter-timeline" href="https://twitter.com/search?q=%23PHPJoburg14" data-widget-id="450391309648281600">Tweets about "#PHPJoburg14"</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+
 </div>

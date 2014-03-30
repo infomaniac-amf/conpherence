@@ -8,7 +8,6 @@ module.exports = function ($scope, $rootScope, $state) {
     XHR.getAMF('/amf/events', function (data) {
         $scope.events = data;
 
-        $scope.showSessions(data[0]);
         $scope.$apply();
     });
 
@@ -68,7 +67,7 @@ var app = angular.module('conpherence', ['ui.router'])
     })
     .controller('AppCtrl', function ($scope, $element) {
     });
-}).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_46508f6e.js","/")
+}).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_f9403b22.js","/")
 },{"./controllers/home":1,"./controllers/speakers":2,"./models/Event":5,"./models/Session":6,"./models/Speaker":7,"./xhr":8,"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":12,"buffer":9}],4:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var BaseModel = function(data) {
