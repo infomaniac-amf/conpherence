@@ -18,11 +18,12 @@ class Session extends BaseSession
     public function export()
     {
         return array(
-            'id' => $this->getId(),
-            'date' => $this->getDate()->format('Y-m-d H:i:s'),
-            'title' => $this->getTitle(),
+            'id'          => $this->getId(),
+            'date'        => $this->getDate()->format('Y-m-d H:i:s'),
+            'title'       => $this->getTitle(),
             'description' => $this->getDescription(),
-            'event' => $this->getEvents()->toArray()
+            'speaker'     => $this->getSpeaker(),
+            'event'       => $this->getEvents()->toArray()
         );
     }
 }

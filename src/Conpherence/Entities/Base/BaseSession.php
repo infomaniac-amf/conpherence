@@ -52,7 +52,7 @@ abstract class BaseSession extends BaseEntity
     protected $speaker;
 
     /**
-     * @ManyToMany(targetEntity="Conpherence\Entities\Event", mappedBy="sessions", cascade={"persist"})
+     * @ManyToMany(targetEntity="Conpherence\Entities\Event", mappedBy="sessions", cascade={"persist"}, fetch="EAGER")
      */
     protected $events;
 

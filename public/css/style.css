@@ -37,3 +37,19 @@ img.country-flag {
     width: 24px;
     height: 24px;
 }
+
+img.speaker-image {
+    max-height: 40px;
+    height: 40px;
+    border: 1px solid #222;
+}
+
+.grayscale {
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: grayscale(100%);
+    filter: url('/img/grayscale.svg'); /* Firefox 4+ */
+    filter: gray; /* IE 6-9 */
+}

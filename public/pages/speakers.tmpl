@@ -1,0 +1,31 @@
+<div>
+    <h2>Speakers at {{event.name}}</h2>
+
+    <div class="row">
+        <div class="col-lg-4" ng-repeat="speaker in event.speakers">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <img class="speaker-image"
+                             src="data:image/jpeg;base64,{{ speaker.image.getData() }}">
+
+                        {{ speaker.name }}
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    {{ speaker.bio}}
+                </div>
+
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-success" ng-click="viewSessions(speaker)">
+                        View {{ speaker.sessions.length }} sessions
+                    </button>
+
+                    <div class="speaker-sessions row" ng-repeat="session in speaker.sessions" ng-show="speaker.sessionsVisible">
+                        <h4>{{ session.title }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

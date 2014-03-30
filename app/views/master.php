@@ -6,10 +6,12 @@
     <script src="/bower_components/infomaniac-amf.js/dist/amf.js" type="text/javascript"></script>
     <script src="/bower_components/angular/angular.min.js" type="text/javascript"></script>
     <script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js" type="text/javascript"></script>
+    <script src="/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
 
     <script src="/js/app.js" type="text/javascript"></script>
 
     <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="/css/style.css" type="text/css" rel="stylesheet">
     <title>Conpherence</title>
 </head>
 <body>
@@ -23,8 +25,6 @@
             <div class="navbar-collapse collapse navbar-responsive-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="https://github.com/infomaniac-amf">Infomaniac-AMF</a></li>
-                    <li><a ui-sref="state1">State 1</a></li>
-                    <li><a ui-sref="state2">State 2</a></li>
                 </ul>
             </div>
         </div>

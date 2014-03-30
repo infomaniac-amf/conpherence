@@ -23,7 +23,29 @@ class Event extends BaseEvent
             'description' => $this->getDescription(),
             'hashtag' => $this->getHashtag(),
             'url' => $this->getUrl(),
-            'sessions' => $this->getSessions()->toArray()
+            'speakers' => $this->getSpeakers()
         );
+    }
+
+    public function getSpeakers()
+    {
+        /**
+         * SELECT sp.* FROM `Event` e
+        INNER JOIN `EventSession` es ON es.eventId = e.id
+        INNER JOIN `Session` s ON s.speakerId = es.sessionId
+        INNER JOIN `Speaker` sp ON s.speakerId = sp.id
+        GROUP BY sp.id
+         */
+
+        $query = $this->getEntityManager()->createQuery(<<<DQL
+SELECT sp FROM Conpherence\Entities\Speaker sp
+INNER JOIN sp.sessions s
+INNER JOIN s.events e
+GROUP BY sp.id
+DQL
+);
+        $speakers = $query->execute();
+        return $speakers;
+
     }
 }

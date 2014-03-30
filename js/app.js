@@ -4,7 +4,7 @@ var Speaker = require('./models/Speaker');
 var XHR = require('./xhr');
 
 var HomeCtrl = require('./controllers/home');
-var SessionCtrl = require('./controllers/session');
+var SpeakerCtrl = require('./controllers/speakers');
 
 var app = angular.module('conpherence', ['ui.router'])
     .config(function ($stateProvider, $urlRouterProvider) {
@@ -16,12 +16,11 @@ var app = angular.module('conpherence', ['ui.router'])
                 templateUrl: "pages/home.tmpl",
                 controller: HomeCtrl
             })
-            .state('sessions', {
-                url: "/sessions/:event",
-                templateUrl: "pages/sessions.tmpl",
-                controller: SessionCtrl
+            .state('speakers', {
+                url: "/speakers",
+                templateUrl: "pages/speakers.tmpl",
+                controller: SpeakerCtrl
             })
     })
     .controller('AppCtrl', function ($scope, $element) {
-
     });

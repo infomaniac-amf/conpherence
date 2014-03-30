@@ -51,7 +51,7 @@ abstract class BaseEvent extends BaseEntity
     protected $url;
 
     /**
-     * @ManyToMany(targetEntity="Conpherence\Entities\Session", inversedBy="events", cascade={"persist"})
+     * @ManyToMany(targetEntity="Conpherence\Entities\Session", inversedBy="events", cascade={"persist"}, fetch="EAGER")
      * @JoinTable(name="EventSession",
      *     joinColumns={@JoinColumn(name="eventId", referencedColumnName="id")},
      *     inverseJoinColumns={@JoinColumn(name="sessionId", referencedColumnName="id")}

@@ -7,13 +7,15 @@ module.exports = function ($scope, $rootScope, $state) {
 
     XHR.getAMF('/amf/events', function (data) {
         $scope.events = data;
+
+        $scope.showSessions(data[0]);
         $scope.$apply();
     });
 
     $scope.showSessions = function (event) {
         $rootScope.selectedEvent = event;
-        $state.go('sessions');
-    }
+        $state.go('speakers');
+    };
 };
 }).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/controllers/home.js","/controllers")
 },{"./../xhr":8,"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":12,"buffer":9}],2:[function(require,module,exports){
@@ -21,13 +23,19 @@ module.exports = function ($scope, $rootScope, $state) {
 var XHR = require('./../xhr');
 
 module.exports = function ($scope, $rootScope, $state) {
+
     if(!$rootScope.selectedEvent) {
         $state.go('home'); // you're drunk
+        return;
     }
 
     $scope.event = $rootScope.selectedEvent;
+
+    $scope.viewSessions = function(speaker) {
+        speaker.sessionsVisible = !speaker.sessionsVisible;
+    };
 };
-}).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/controllers/session.js","/controllers")
+}).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/controllers/speakers.js","/controllers")
 },{"./../xhr":8,"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":12,"buffer":9}],3:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var Event = require('./models/Event');
@@ -36,7 +44,7 @@ var Speaker = require('./models/Speaker');
 var XHR = require('./xhr');
 
 var HomeCtrl = require('./controllers/home');
-var SessionCtrl = require('./controllers/session');
+var SpeakerCtrl = require('./controllers/speakers');
 
 var app = angular.module('conpherence', ['ui.router'])
     .config(function ($stateProvider, $urlRouterProvider) {
@@ -48,17 +56,16 @@ var app = angular.module('conpherence', ['ui.router'])
                 templateUrl: "pages/home.tmpl",
                 controller: HomeCtrl
             })
-            .state('sessions', {
-                url: "/sessions/:event",
-                templateUrl: "pages/sessions.tmpl",
-                controller: SessionCtrl
+            .state('speakers', {
+                url: "/speakers",
+                templateUrl: "pages/speakers.tmpl",
+                controller: SpeakerCtrl
             })
     })
     .controller('AppCtrl', function ($scope, $element) {
-
     });
-}).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_125b428a.js","/")
-},{"./controllers/home":1,"./controllers/session":2,"./models/Event":5,"./models/Session":6,"./models/Speaker":7,"./xhr":8,"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":12,"buffer":9}],4:[function(require,module,exports){
+}).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_308ace31.js","/")
+},{"./controllers/home":1,"./controllers/speakers":2,"./models/Event":5,"./models/Session":6,"./models/Speaker":7,"./xhr":8,"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":12,"buffer":9}],4:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var BaseModel = function(data) {
     if(data) {
