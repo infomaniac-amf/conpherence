@@ -179,4 +179,5 @@ return array(
 
 	),
 
+    'flags' => base_path().DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'flags'
 );

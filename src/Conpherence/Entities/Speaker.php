@@ -4,6 +4,7 @@ namespace Conpherence\Entities;
 
 use Conpherence\Entities\Base\BaseSpeaker;
 use Exception;
+use Illuminate\Support\Facades\Config;
 use Infomaniac\Type\ByteArray;
 
 /**
@@ -48,7 +49,7 @@ class Speaker extends BaseSpeaker
 
     private function getFlag()
     {
-        $basePath = realpath(__DIR__ . '/../../../assets/flags');
+        $basePath = Config::get('app.flags');
         $country  = str_replace(' ', '-', $this->getCountry());
 
         if (!file_exists("$basePath/$country-icon.png")) {

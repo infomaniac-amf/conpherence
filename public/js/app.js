@@ -1,6 +1,48 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var XHR = require('./../xhr');
+var Speaker = require('./../models/Speaker');
+var Image = require('./../models/Image');
+
+module.exports = function ($scope, $rootScope, $state) {
+    $scope.countries = ['...loading countries...'];
+
+    $scope.speaker = new Speaker();
+    $scope.speaker.image = new Image();
+
+    $scope.readImage = function (input) {
+        if (input.files && input.files[0]) {
+            var fileReader = new FileReader();
+            fileReader.onload = function (e) {
+                $scope.speaker.image.data = new ByteArray(( e.target.result ));
+            };
+            fileReader.readAsBinaryString(input.files[0]);
+        }
+    };
+
+    $scope.openFileDialog = function ($event) {
+        var fileInput = $($event.currentTarget).siblings('input[type="file"]');
+        fileInput.change(function (e) {
+            $scope.readImage(e.currentTarget);
+        });
+        fileInput.click();
+    };
+
+    $scope.addSpeaker = function() {
+        XHR.postAMF('/amf/speakers', AMF.stringify($scope.speaker, AMF.CLASS_MAPPING), function (data) {
+            debugger;
+        });
+    };
+
+    XHR.getAMF('/amf/countries', function (data) {
+        $scope.countries = data;
+        $scope.$apply();
+    });
+};
+}).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/controllers/add-speaker.js","/controllers")
+},{"./../models/Image":7,"./../models/Speaker":9,"./../xhr":10,"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":14,"buffer":11}],2:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var XHR = require('./../xhr');
 
 module.exports = function ($scope, $rootScope, $state) {
     $scope.events = [];
@@ -15,9 +57,14 @@ module.exports = function ($scope, $rootScope, $state) {
         $rootScope.selectedEvent = event;
         $state.go('speakers');
     };
+
+    $scope.addSpeaker = function (event) {
+        $rootScope.selectedEvent = event;
+        $state.go('add-speaker');
+    };
 };
 }).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/controllers/home.js","/controllers")
-},{"./../xhr":8,"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":12,"buffer":9}],2:[function(require,module,exports){
+},{"./../xhr":10,"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":14,"buffer":11}],3:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var XHR = require('./../xhr');
 
@@ -39,7 +86,7 @@ module.exports = function ($scope, $rootScope, $state) {
     };
 };
 }).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/controllers/speakers.js","/controllers")
-},{"./../xhr":8,"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":12,"buffer":9}],3:[function(require,module,exports){
+},{"./../xhr":10,"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":14,"buffer":11}],4:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var Event = require('./models/Event');
 var Session = require('./models/Session');
@@ -48,6 +95,7 @@ var XHR = require('./xhr');
 
 var HomeCtrl = require('./controllers/home');
 var SpeakerCtrl = require('./controllers/speakers');
+var AddSpeakerCtrl = require('./controllers/add-speaker');
 
 var app = angular.module('conpherence', ['ui.router'])
     .config(function ($stateProvider, $urlRouterProvider) {
@@ -64,11 +112,16 @@ var app = angular.module('conpherence', ['ui.router'])
                 templateUrl: "pages/speakers.tmpl",
                 controller: SpeakerCtrl
             })
+            .state('add-speaker', {
+                url: "/add-speaker",
+                templateUrl: "pages/add-speaker.tmpl",
+                controller: AddSpeakerCtrl
+            })
     })
     .controller('AppCtrl', function ($scope, $element) {
     });
-}).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_f9403b22.js","/")
-},{"./controllers/home":1,"./controllers/speakers":2,"./models/Event":5,"./models/Session":6,"./models/Speaker":7,"./xhr":8,"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":12,"buffer":9}],4:[function(require,module,exports){
+}).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_1b841985.js","/")
+},{"./controllers/add-speaker":1,"./controllers/home":2,"./controllers/speakers":3,"./models/Event":6,"./models/Session":8,"./models/Speaker":9,"./xhr":10,"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":14,"buffer":11}],5:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var BaseModel = function(data) {
     if(data) {
@@ -106,7 +159,7 @@ BaseModel.prototype = {
 
 module.exports = BaseModel;
 }).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/models/Base.js","/models")
-},{"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":12,"buffer":9}],5:[function(require,module,exports){
+},{"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":14,"buffer":11}],6:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var BaseModel = require('./Base');
 
@@ -122,7 +175,23 @@ AMF.registerClassAlias('Conpherence\\Entities\\Event', Event);
 
 module.exports = Event;
 }).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/models/Event.js","/models")
-},{"./Base":4,"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":12,"buffer":9}],6:[function(require,module,exports){
+},{"./Base":5,"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":14,"buffer":11}],7:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+var BaseModel = require('./Base');
+
+var Image = function (params) {
+    BaseModel.call(this, params);
+};
+
+Image.prototype = new BaseModel();
+Image.prototype.constructor = Image;
+Image.prototype._classMapping = 'Conpherence\\Entities\\Image';
+
+AMF.registerClassAlias('Conpherence\\Entities\\Image', Image);
+
+module.exports = Image;
+}).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/models/Image.js","/models")
+},{"./Base":5,"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":14,"buffer":11}],8:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var BaseModel = require('./Base');
 
@@ -138,7 +207,7 @@ AMF.registerClassAlias('Conpherence\\Entities\\Session', Session);
 
 module.exports = Session;
 }).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/models/Session.js","/models")
-},{"./Base":4,"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":12,"buffer":9}],7:[function(require,module,exports){
+},{"./Base":5,"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":14,"buffer":11}],9:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var BaseModel = require('./Base');
 
@@ -152,9 +221,9 @@ Speaker.prototype._classMapping = 'Conpherence\\Entities\\Speaker';
 
 AMF.registerClassAlias('Conpherence\\Entities\\Speaker', Speaker);
 
-module.exports = BaseModel;
+module.exports = Speaker;
 }).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/models/Speaker.js","/models")
-},{"./Base":4,"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":12,"buffer":9}],8:[function(require,module,exports){
+},{"./Base":5,"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":14,"buffer":11}],10:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 if (!XMLHttpRequest.prototype.sendAsBinary) {
     XMLHttpRequest.prototype.sendAsBinary = function (data) {
@@ -200,7 +269,7 @@ module.exports = {
     postAMF: post
 };
 }).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/xhr.js","/")
-},{"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":12,"buffer":9}],9:[function(require,module,exports){
+},{"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":14,"buffer":11}],11:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /**
  * The buffer module from node.js, for the browser.
@@ -1314,7 +1383,7 @@ function assert (test, message) {
 }
 
 }).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../node_modules/gulp-browserify/node_modules/browserify/node_modules/buffer/index.js","/../node_modules/gulp-browserify/node_modules/browserify/node_modules/buffer")
-},{"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":12,"base64-js":10,"buffer":9,"ieee754":11}],10:[function(require,module,exports){
+},{"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":14,"base64-js":12,"buffer":11,"ieee754":13}],12:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
@@ -1439,7 +1508,7 @@ var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 }())
 
 }).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../node_modules/gulp-browserify/node_modules/browserify/node_modules/buffer/node_modules/base64-js/lib/b64.js","/../node_modules/gulp-browserify/node_modules/browserify/node_modules/buffer/node_modules/base64-js/lib")
-},{"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":12,"buffer":9}],11:[function(require,module,exports){
+},{"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":14,"buffer":11}],13:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 exports.read = function(buffer, offset, isLE, mLen, nBytes) {
   var e, m,
@@ -1527,7 +1596,7 @@ exports.write = function(buffer, value, offset, isLE, mLen, nBytes) {
 };
 
 }).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../node_modules/gulp-browserify/node_modules/browserify/node_modules/buffer/node_modules/ieee754/index.js","/../node_modules/gulp-browserify/node_modules/browserify/node_modules/buffer/node_modules/ieee754")
-},{"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":12,"buffer":9}],12:[function(require,module,exports){
+},{"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":14,"buffer":11}],14:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 // shim for using process in browser
 
@@ -1591,4 +1660,4 @@ process.chdir = function (dir) {
 };
 
 }).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js","/../node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process")
-},{"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":12,"buffer":9}]},{},[3])
+},{"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":14,"buffer":11}]},{},[4])

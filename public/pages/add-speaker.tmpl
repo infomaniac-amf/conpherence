@@ -1,0 +1,61 @@
+<form class="form-horizontal">
+    <fieldset>
+        <legend>Add Speaker</legend>
+        <div class="form-group"><label for="name" class="col-lg-2 control-label">Name</label>
+
+            <div class="col-lg-10"><input type="text" class="form-control" id="name" placeholder="Speaker McSpeakston"
+                                          ng-model="speaker.name">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="country" class="col-lg-2 control-label">Country</label>
+
+            <div class="col-lg-10">
+                <select id="country" class="form-control" ng-options="country for country in countries"
+                        ng-model="speaker.country"></select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Twitter Handle</label>
+
+            <div class="col-lg-10">
+                <div class="input-group">
+                    <span class="input-group-addon">@</span>
+                    <input type="text" class="form-control" ng-model="speaker.twitterHandle">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group"><label for="bio" class="col-lg-2 control-label">Bio</label>
+
+            <div class="col-lg-10">
+                <textarea class="form-control" rows="3" id="bio" ng-model="speaker.bio"></textarea>
+                <span class="help-block">Something short and snappy!</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="image" class="col-lg-2 control-label">Image</label>
+
+            <div class="col-lg-10">
+                <button id="image" type="button" class="btn btn-success" ng-click="openFileDialog($event)">Select image</button>
+                <input type="file" class="hidden" ng-model="speaker.image">
+            </div>
+        </div>
+
+        <div ng-repeat="session in sessions" ng-show="!$first">
+            <div ng-include src="'pages/add-speaker.tmpl'"></div>
+        </div>
+
+        <hr>
+
+        <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+                <a class="btn btn-default" data-ui-sref="home">Cancel</a>
+                <button type="submit" class="btn btn-primary pull-right" ng-click="addSpeaker()">Submit</button>
+            </div>
+        </div>
+    </fieldset>
+</form>

@@ -10,4 +10,4 @@ Speaker.prototype._classMapping = 'Conpherence\\Entities\\Speaker';
 
 AMF.registerClassAlias('Conpherence\\Entities\\Speaker', Speaker);
 
-module.exports = BaseModel;
+module.exports = Speaker;

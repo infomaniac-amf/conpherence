@@ -28,9 +28,8 @@ Route::filter('amf-response', function($route, $request, Response $response) {
 Route::group(array('prefix' => 'amf', 'after' => 'amf-response'), function() {
     Route::controller('speakers', 'Conpherence\Controllers\SpeakerController');
     Route::controller('events', 'Conpherence\Controllers\EventController');
+    Route::controller('countries', 'Conpherence\Controllers\CountriesController');
 });
-
-
 
 App::fatal(function(Exception $exception)
 {

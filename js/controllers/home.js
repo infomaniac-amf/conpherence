@@ -13,4 +13,9 @@ module.exports = function ($scope, $rootScope, $state) {
         $rootScope.selectedEvent = event;
         $state.go('speakers');
     };
+
+    $scope.addSpeaker = function (event) {
+        $rootScope.selectedEvent = event;
+        $state.go('add-speaker');
+    };
 };
