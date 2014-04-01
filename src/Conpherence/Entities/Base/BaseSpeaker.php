@@ -58,7 +58,7 @@ abstract class BaseSpeaker extends BaseEntity
 
     /**
      * @ManyToOne(targetEntity="Conpherence\Entities\Image", inversedBy="speakers", cascade={"persist"})
-     * @JoinColumn(name="imageId", referencedColumnName="id")
+     * @JoinColumn(name="imageId", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $image;
 

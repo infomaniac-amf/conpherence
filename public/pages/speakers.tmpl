@@ -30,7 +30,7 @@
                          ng-show="speaker.sessionsVisible">
                         <a class="list-group-item">
                             <h4 class="list-group-item-heading">{{ session.title }} - {{ getDate(session.date) }}</h4>
-                            <p class="list-group-item-text">{{ session.description }}</p>
+                            <p class="list-group-item-text" ng-bind-html="getTrustedHTMLContent(session.description)"></p>
                         </a>
                     </div>
                 </div>

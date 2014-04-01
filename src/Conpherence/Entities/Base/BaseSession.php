@@ -47,12 +47,12 @@ abstract class BaseSession extends BaseEntity
 
     /**
      * @ManyToOne(targetEntity="Conpherence\Entities\Speaker", inversedBy="sessions", cascade={"persist"})
-     * @JoinColumn(name="speakerId", referencedColumnName="id", nullable=false)
+     * @JoinColumn(name="speakerId", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      */
     protected $speaker;
 
     /**
-     * @ManyToMany(targetEntity="Conpherence\Entities\Event", mappedBy="sessions", cascade={"persist"}, fetch="EAGER")
+     * @ManyToMany(targetEntity="Conpherence\Entities\Event", mappedBy="sessions", cascade={"persist"})
      */
     protected $events;
 

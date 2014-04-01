@@ -3,21 +3,45 @@
 var XHR = require('./../xhr');
 var Speaker = require('./../models/Speaker');
 var Image = require('./../models/Image');
+var Session = require('./../models/Session');
 
 module.exports = function ($scope, $rootScope, $state) {
     $scope.countries = ['...loading countries...'];
 
     $scope.speaker = new Speaker();
-    $scope.speaker.image = new Image();
+    $scope.sessions = [];
 
     $scope.readImage = function (input) {
         if (input.files && input.files[0]) {
             var fileReader = new FileReader();
             fileReader.onload = function (e) {
+
+                $scope.speaker.image = new Image();
                 $scope.speaker.image.data = new ByteArray(( e.target.result ));
+
             };
             fileReader.readAsBinaryString(input.files[0]);
         }
+    };
+
+    $scope.addSession = function() {
+        $scope.sessions.push({});
+    };
+
+    $scope.getSessions = function(speaker) {
+        var sessions = [];
+        angular.forEach($scope.sessions, function(data) {
+            var session = new Session({
+                title: data.title,
+                description: data.description,
+                date: new Date(data.date),
+                speaker: speaker
+            });
+
+            sessions.push(session);
+        });
+
+        return sessions;
     };
 
     $scope.openFileDialog = function ($event) {
@@ -29,8 +53,11 @@ module.exports = function ($scope, $rootScope, $state) {
     };
 
     $scope.addSpeaker = function() {
+        $scope.speaker.sessions = $scope.getSessions($scope.speaker);
+
         XHR.postAMF('/amf/speakers', AMF.stringify($scope.speaker, AMF.CLASS_MAPPING), function (data) {
-            debugger;
+            alert($scope.speaker.name + ' created!');
+            $state.go('home');
         });
     };
 
@@ -40,7 +67,7 @@ module.exports = function ($scope, $rootScope, $state) {
     });
 };
 }).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/controllers/add-speaker.js","/controllers")
-},{"./../models/Image":7,"./../models/Speaker":9,"./../xhr":10,"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":14,"buffer":11}],2:[function(require,module,exports){
+},{"./../models/Image":7,"./../models/Session":8,"./../models/Speaker":9,"./../xhr":10,"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":14,"buffer":11}],2:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var XHR = require('./../xhr');
 
@@ -68,7 +95,7 @@ module.exports = function ($scope, $rootScope, $state) {
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var XHR = require('./../xhr');
 
-module.exports = function ($scope, $rootScope, $state) {
+module.exports = function ($scope, $rootScope, $state, $sce) {
 
     if(!$rootScope.selectedEvent) {
         $state.go('home'); // you're drunk
@@ -79,6 +106,10 @@ module.exports = function ($scope, $rootScope, $state) {
 
     $scope.viewSessions = function(speaker) {
         speaker.sessionsVisible = !speaker.sessionsVisible;
+    };
+
+    $scope.getTrustedHTMLContent = function(content) {
+        return $sce.trustAsHtml(content);
     };
 
     $scope.getDate = function(date) {
@@ -120,7 +151,7 @@ var app = angular.module('conpherence', ['ui.router'])
     })
     .controller('AppCtrl', function ($scope, $element) {
     });
-}).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_1b841985.js","/")
+}).call(this,require("/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_5a963390.js","/")
 },{"./controllers/add-speaker":1,"./controllers/home":2,"./controllers/speakers":3,"./models/Event":6,"./models/Session":8,"./models/Speaker":9,"./xhr":10,"/Library/WebServer/Documents/projects/amf/conpherence/node_modules/gulp-browserify/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":14,"buffer":11}],5:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var BaseModel = function(data) {
@@ -257,7 +288,8 @@ function post(uri, packet, callback) {
     xhr.overrideMimeType('application/x-amf; charset:x-user-defined');
     xhr.onreadystatechange = function (event) {
         if (event.currentTarget.readyState == XMLHttpRequest.DONE) {
-            callback.apply(this, [event, xhr]);
+            var data = AMF.parse(this.responseText);
+            callback.apply(this, [data]);
         }
     };
 

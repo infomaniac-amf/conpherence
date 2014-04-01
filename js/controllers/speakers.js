@@ -1,6 +1,6 @@
 var XHR = require('./../xhr');
 
-module.exports = function ($scope, $rootScope, $state) {
+module.exports = function ($scope, $rootScope, $state, $sce) {
 
     if(!$rootScope.selectedEvent) {
         $state.go('home'); // you're drunk
@@ -11,6 +11,10 @@ module.exports = function ($scope, $rootScope, $state) {
 
     $scope.viewSessions = function(speaker) {
         speaker.sessionsVisible = !speaker.sessionsVisible;
+    };
+
+    $scope.getTrustedHTMLContent = function(content) {
+        return $sce.trustAsHtml(content);
     };
 
     $scope.getDate = function(date) {

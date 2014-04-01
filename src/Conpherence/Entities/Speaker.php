@@ -49,8 +49,13 @@ class Speaker extends BaseSpeaker
 
     private function getFlag()
     {
+        $country  = $this->getCountry();
+        if(empty($country)) {
+            return null;
+        }
+
         $basePath = Config::get('app.flags');
-        $country  = str_replace(' ', '-', $this->getCountry());
+        $country  = str_replace(' ', '-', $country);
 
         if (!file_exists("$basePath/$country-icon.png")) {
             throw new Exception('Could not find country flag');

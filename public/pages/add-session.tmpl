@@ -1,1 +1,28 @@
-<p>{{ country }}</p>
+<form class="form-horizontal">
+    <fieldset>
+        <legend>Session {{ $index + 1 }}</legend>
+        <div class="form-group">
+            <label for="title" class="col-lg-2 control-label">Title</label>
+
+            <div class="col-lg-10">
+                <input id="title" type="text" class="form-control" ng-model="session.title">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="description" class="col-lg-2 control-label">Description</label>
+
+            <div class="col-lg-10">
+                <textarea id="description" class="form-control" rows="3" ng-model="session.description"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="datetime" class="col-lg-2 control-label">Date</label>
+
+            <div class="input-group date col-lg-10">
+                <input id="datetime" type="datetime-local" ng-model="session.date">
+            </div>
+        </div>
+    </fieldset>
+</form>

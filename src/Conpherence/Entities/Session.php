@@ -10,6 +10,11 @@ use Conpherence\Entities\Base\BaseSession;
  */
 class Session extends BaseSession
 {
+    public function getDescription()
+    {
+        return str_replace(PHP_EOL, '<br>', parent::getDescription());
+    }
+
     /**
      * Return an associative array of class properties
      *

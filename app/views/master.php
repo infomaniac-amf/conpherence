@@ -11,8 +11,10 @@
 
     <script src="/js/app.js" type="text/javascript"></script>
 
+    <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <link href="/css/style.css" type="text/css" rel="stylesheet">
+
     <title>Conpherence</title>
 </head>
 <body>
@@ -33,20 +35,8 @@
         <div ui-view>
         </div>
     </div>
-
-    <!--<div class="speaker-box" ng-repeat="speaker in speakers">
-        <h1>{{ speaker.name }} <span class="twitter">{{ speaker.twitter }}</span>
-            <img class="country-flag" src="data:image/png;base64,{{ speaker.flag.getData() }}">
-        </h1>
-
-        <img class="country-flag" src="data:image/jpeg;base64,{{ speaker.image.getData() }}">
-
-        <p class="bio">{{ speaker.bio }}</p>
-
-        <p>{{ speaker.name }} has {{ speaker.sessions.length }} sessions to present</p>
-    </div>-->
 </div>
 </body>
 
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<!--<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>-->
 </html>
